@@ -46,9 +46,9 @@ object fMain: TfMain
     object lblHostname: TLabel
       Left = 16
       Top = 72
-      Width = 54
+      Width = 48
       Height = 13
-      Caption = 'Hostaname'
+      Caption = 'Hostname'
     end
     object lblDatabase: TLabel
       Left = 16
