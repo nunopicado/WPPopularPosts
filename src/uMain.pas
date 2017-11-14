@@ -96,6 +96,7 @@ end;
 
 procedure TfMain.bExitClick(Sender: TObject);
 begin
+  dbSQL.Disconnect;
   Application.Terminate;
 end;
 
