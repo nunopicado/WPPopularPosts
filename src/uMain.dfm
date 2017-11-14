@@ -135,7 +135,7 @@ object fMain: TfMain
       Top = 296
       Width = 217
       Height = 25
-      Caption = 'Connect'
+      Caption = 'Connect to the server'
       TabOrder = 5
       OnClick = bConnectClick
     end
