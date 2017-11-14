@@ -92,7 +92,7 @@ begin
       gridPosts.SetFocus;
     end
     else begin
-      ShowMessage('Não foi possível conectar ao servidor. . .');
+      ShowMessage('It was not possible to establish a connection to the server. . .');
     end;
 end;
 
@@ -106,7 +106,7 @@ end;
 procedure TfMain.ChangePageViews(const PostID: Integer; const NewValue: LongWord);
 begin
   if MessageDlg(
-       Format('%d será gravado como o novo valor de visualizações.'#10'Confirma?', [NewValue]),
+       Format('%d will be saved as the new page views value.'#10'Confirm?', [NewValue]),
        mtConfirmation,
        [mbYes, mbNo],
        0,
@@ -154,15 +154,15 @@ begin
   try
     NewValue := StrToInt(
       InputBox(
-        'Substituir número de visualizações',
-        Format('Qual o novo valor para o post '#10'"%s"?', [dsPosts.DataSet.FieldByName('post_title').AsString]),
+        'Replace page views value',
+        Format('What is the new value for post '#10'"%s"?', [dsPosts.DataSet.FieldByName('post_title').AsString]),
         dsPosts.DataSet.FieldByName('pageviews').AsString
       )
     );
   except
     on E: EConvertError do
       begin
-        ShowMessage('O valor deve ser numérico.');
+        ShowMessage('Value must be a number.');
         NewValue := dsPosts.DataSet.FieldByName('pageviews').AsInteger;
       end;
   end;
