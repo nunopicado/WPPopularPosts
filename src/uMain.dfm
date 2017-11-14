@@ -101,6 +101,13 @@ object fMain: TfMain
       Caption = 'lblHowToDetail'
       WordWrap = True
     end
+    object lblTablePreffix: TLabel
+      Left = 128
+      Top = 128
+      Width = 61
+      Height = 13
+      Caption = 'Table Preffix'
+    end
     object edHostname: TEdit
       Left = 16
       Top = 91
@@ -111,7 +118,7 @@ object fMain: TfMain
     object edDatabase: TEdit
       Left = 16
       Top = 147
-      Width = 217
+      Width = 105
       Height = 21
       TabOrder = 2
     end
@@ -120,7 +127,7 @@ object fMain: TfMain
       Top = 203
       Width = 217
       Height = 21
-      TabOrder = 3
+      TabOrder = 4
     end
     object edPassword: TEdit
       Left = 16
@@ -128,7 +135,7 @@ object fMain: TfMain
       Width = 217
       Height = 21
       PasswordChar = '*'
-      TabOrder = 4
+      TabOrder = 5
     end
     object bConnect: TButton
       Left = 16
@@ -136,7 +143,7 @@ object fMain: TfMain
       Width = 217
       Height = 25
       Caption = 'Connect to the server'
-      TabOrder = 5
+      TabOrder = 6
       OnClick = bConnectClick
     end
     object bExit: TButton
@@ -146,7 +153,7 @@ object fMain: TfMain
       Height = 25
       Anchors = [akLeft, akRight, akBottom]
       Caption = 'Exit'
-      TabOrder = 6
+      TabOrder = 7
       OnClick = bExitClick
     end
     object edPort: TEdit
@@ -157,6 +164,13 @@ object fMain: TfMain
       Alignment = taCenter
       NumbersOnly = True
       TabOrder = 1
+    end
+    object edTablePreffix: TEdit
+      Left = 128
+      Top = 147
+      Width = 105
+      Height = 21
+      TabOrder = 3
     end
   end
   object gridPosts: TDBGrid

@@ -40,6 +40,8 @@ type
     dsPosts: TDataSource;
     lblHowTo: TLabel;
     lblHowToDetail: TLabel;
+    edTablePreffix: TEdit;
+    lblTablePreffix: TLabel;
     procedure bExitClick(Sender: TObject);
     procedure bConnectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -90,7 +92,7 @@ begin
       gridPosts.SetFocus;
     end
     else begin
-      ShowMessage('Nï¿½o foi possï¿½vel conectar ao servidor. . .');
+      ShowMessage('Não foi possível conectar ao servidor. . .');
     end;
 end;
 
@@ -104,7 +106,7 @@ end;
 procedure TfMain.ChangePageViews(const PostID: Integer; const NewValue: LongWord);
 begin
   if MessageDlg(
-       Format('%d serï¿½ gravado como o novo valor de visualizaï¿½ï¿½es.'#10'Confirma?', [NewValue]),
+       Format('%d será gravado como o novo valor de visualizações.'#10'Confirma?', [NewValue]),
        mtConfirmation,
        [mbYes, mbNo],
        0,
@@ -113,7 +115,7 @@ begin
     then begin
       dbSQL.Run(
         TSQLStatement.New(
-          'UPDATE wp_popularpostsdata ' +
+          'UPDATE ' + edTablePreffix.Text + 'popularpostsdata ' +
           '   SET pageviews = ' + NewValue.ToString + ' ' +
           ' WHERE postid = ' + PostID.ToString,
           TSQLParams.New
@@ -152,7 +154,7 @@ begin
   try
     NewValue := StrToInt(
       InputBox(
-        'Substituir nï¿½mero de visualizaï¿½ï¿½es',
+        'Substituir número de visualizações',
         Format('Qual o novo valor para o post '#10'"%s"?', [dsPosts.DataSet.FieldByName('post_title').AsString]),
         dsPosts.DataSet.FieldByName('pageviews').AsString
       )
@@ -160,7 +162,7 @@ begin
   except
     on E: EConvertError do
       begin
-        ShowMessage('O valor deve ser numï¿½rico.');
+        ShowMessage('O valor deve ser numérico.');
         NewValue := dsPosts.DataSet.FieldByName('pageviews').AsInteger;
       end;
   end;
@@ -185,20 +187,21 @@ end;
 
 procedure TfMain.LoadConnectionInfo;
 begin
-  edHostname.Text := ConnectionInfo.Hostname;
-  edPort.Text     := ConnectionInfo.Port.ToString;
-  edDatabase.Text := ConnectionInfo.Database;
-  edUsername.Text := ConnectionInfo.Username;
-  edPassword.Text := ConnectionInfo.Password;
+  edHostname.Text     := ConnectionInfo.Hostname;
+  edPort.Text         := ConnectionInfo.Port.ToString;
+  edDatabase.Text     := ConnectionInfo.Database;
+  edTablePreffix.Text := ConnectionInfo.TablePreffix;
+  edUsername.Text     := ConnectionInfo.Username;
+  edPassword.Text     := ConnectionInfo.Password;
 end;
 
 procedure TfMain.LoadPosts;
 begin
   qPosts := dbSQL.NewQuery(
     TSQLStatement.New(
-      'select wp_posts.ID, wp_posts.post_title, wp_popularpostsdata.pageviews '+
-      '  from wp_posts '+
-      ' inner join wp_popularpostsdata on wp_popularpostsdata.postid = wp_posts.ID '+
+      'select ' + edTablePreffix.Text + 'posts.ID, ' + edTablePreffix.Text + 'posts.post_title, ' + edTablePreffix.Text + 'popularpostsdata.pageviews '+
+      '  from ' + edTablePreffix.Text + 'posts '+
+      ' inner join ' + edTablePreffix.Text + 'popularpostsdata on ' + edTablePreffix.Text + 'popularpostsdata.postid = ' + edTablePreffix.Text + 'posts.ID '+
       ' where post_status = ''publish'' '+
       '   and post_title <> '''' '+
       ' order by post_title'
@@ -215,11 +218,12 @@ end;
 
 procedure TfMain.SaveConnectionInfo;
 begin
-  ConnectionInfo.Hostname := edHostname.Text;
-  ConnectionInfo.Port     := StrToInt(edPort.Text);
-  ConnectionInfo.Database := edDatabase.Text;
-  ConnectionInfo.Username := edUsername.Text;
-  ConnectionInfo.Password := edPassword.Text;
+  ConnectionInfo.Hostname     := edHostname.Text;
+  ConnectionInfo.Port         := StrToInt(edPort.Text);
+  ConnectionInfo.Database     := edDatabase.Text;
+  ConnectionInfo.TablePreffix := edTablePreffix.Text;
+  ConnectionInfo.Username     := edUsername.Text;
+  ConnectionInfo.Password     := edPassword.Text;
 end;
 
 end.
