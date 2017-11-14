@@ -30,13 +30,14 @@ type
 
   TConnectionInfo = class(TInterfacedObject, IConnectionInfo)
   private const
-    cSection      = 'Connection';
-    cHostname     = 'Hostname';
-    cPort         = 'Port';
-    cDatabase     = 'Database';
-    cUsername     = 'Username';
-    cPassword     = 'Password';
-    cTablePreffix = 'TablePreffix';
+    cSectionServer = 'Connection';
+    cSectionDB     = 'Database';
+    cHostname      = 'Hostname';
+    cPort          = 'Port';
+    cDatabase      = 'Database';
+    cUsername      = 'Username';
+    cPassword      = 'Password';
+    cTablePreffix  = 'TablePreffix';
   private var
     FIni: TIniFile;
   private
@@ -86,7 +87,7 @@ end;
 function TConnectionInfo.GetDatabase: string;
 begin
   Result := FIni.ReadString(
-    cSection,
+    cSectionDB,
     cDatabase,
     ''
   );
@@ -95,7 +96,7 @@ end;
 function TConnectionInfo.GetHostname: string;
 begin
   Result := FIni.ReadString(
-    cSection,
+    cSectionServer,
     cHostname,
     ''
   );
@@ -105,7 +106,7 @@ function TConnectionInfo.GetPassword: string;
 begin
   Result := TCryptString.New(
     FIni.ReadString(
-      cSection,
+      cSectionServer,
       cPassword,
       ''
     )
@@ -116,7 +117,7 @@ end;
 function TConnectionInfo.GetPort: word;
 begin
   Result := FIni.ReadInteger(
-    cSection,
+    cSectionServer,
     cPort,
     3306
   );
@@ -125,7 +126,7 @@ end;
 function TConnectionInfo.GetTablePreffix: string;
 begin
   Result := FIni.ReadString(
-    cSection,
+    cSectionDB,
     cTablePreffix,
     ''
   );
@@ -134,7 +135,7 @@ end;
 function TConnectionInfo.GetUsername: string;
 begin
   Result := FIni.ReadString(
-    cSection,
+    cSectionServer,
     cUsername,
     ''
   );
@@ -149,7 +150,7 @@ end;
 procedure TConnectionInfo.SetDatabase(const Value: string);
 begin
   FIni.WriteString(
-    cSection,
+    cSectionDB,
     cDatabase,
     Value
   );
@@ -158,7 +159,7 @@ end;
 procedure TConnectionInfo.SetHostname(const Value: string);
 begin
   FIni.WriteString(
-    cSection,
+    cSectionServer,
     cHostname,
     Value
   );
@@ -167,7 +168,7 @@ end;
 procedure TConnectionInfo.SetPassword(const Value: string);
 begin
   FIni.WriteString(
-    cSection,
+    cSectionServer,
     cPassword,
     TCryptString.New(
       Value
@@ -178,7 +179,7 @@ end;
 procedure TConnectionInfo.SetPort(const Value: word);
 begin
   FIni.WriteInteger(
-    cSection,
+    cSectionServer,
     cPort,
     Value
   );
@@ -187,7 +188,7 @@ end;
 procedure TConnectionInfo.SetTablePreffix(const Value: string);
 begin
   FIni.WriteString(
-    cSection,
+    cSectionDB,
     cTablePreffix,
     Value
   );
@@ -196,7 +197,7 @@ end;
 procedure TConnectionInfo.SetUsername(const Value: string);
 begin
   FIni.WriteString(
-    cSection,
+    cSectionServer,
     cUsername,
     Value
   );
