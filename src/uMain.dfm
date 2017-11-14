@@ -190,6 +190,7 @@ object fMain: TfMain
     TitleFont.Style = []
     OnDblClick = gridPostsDblClick
     OnKeyPress = gridPostsKeyPress
+    OnTitleClick = gridPostsTitleClick
     Columns = <
       item
         Expanded = False

@@ -49,7 +49,19 @@ type
     procedure MemoHandler(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure gridPostsDblClick(Sender: TObject);
     procedure gridPostsKeyPress(Sender: TObject; var Key: Char);
+    procedure gridPostsTitleClick(Column: TColumn);
+  private type
+    TOrderField = object
+    private
+      FFieldName: string;
+      FDesc: Boolean;
+      procedure SetFieldName(Value: string);
+    public
+      property FieldName: string write SetFieldName;
+      function AsString: string;
+    end;
   private
+    OrderField: TOrderField;
     dbSQL: IDatabase;
     qPosts: IDBQuery;
     ConnectionInfo: IConnectionInfo;
@@ -88,6 +100,7 @@ begin
   if dbSQL.IsConnected
     then begin
       SaveConnectionInfo;
+      OrderField.FieldName := 'post_title';
       LoadPosts;
       gridPosts.SetFocus;
     end
@@ -184,6 +197,12 @@ begin
     end;
 end;
 
+procedure TfMain.gridPostsTitleClick(Column: TColumn);
+begin
+  OrderField.FieldName := Column.FieldName;
+  LoadPosts;
+end;
+
 procedure TfMain.LoadConnectionInfo;
 begin
   edHostname.Text     := ConnectionInfo.Hostname;
@@ -203,7 +222,7 @@ begin
       ' inner join ' + edTablePreffix.Text + 'popularpostsdata on ' + edTablePreffix.Text + 'popularpostsdata.postid = ' + edTablePreffix.Text + 'posts.ID '+
       ' where post_status = ''publish'' '+
       '   and post_title <> '''' '+
-      ' order by post_title'
+      ' order by ' + OrderField.AsString
     )
   ).Run
    .Publish(dsPosts);
@@ -223,6 +242,23 @@ begin
   ConnectionInfo.TablePreffix := edTablePreffix.Text;
   ConnectionInfo.Username     := edUsername.Text;
   ConnectionInfo.Password     := edPassword.Text;
+end;
+
+{ TfMain.TOrderField }
+
+function TfMain.TOrderField.AsString: string;
+begin
+  Result := FFieldName;
+  if FDesc
+    then Result := Result + ' DESC';
+end;
+
+procedure TfMain.TOrderField.SetFieldName(Value: string);
+begin
+  if Value = FFieldName
+    then FDesc := not FDesc
+    else FDesc := False;
+  FFieldName := Value;
 end;
 
 end.
