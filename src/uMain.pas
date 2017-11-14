@@ -117,8 +117,7 @@ begin
         TSQLStatement.New(
           'UPDATE ' + edTablePreffix.Text + 'popularpostsdata ' +
           '   SET pageviews = ' + NewValue.ToString + ' ' +
-          ' WHERE postid = ' + PostID.ToString,
-          TSQLParams.New
+          ' WHERE postid = ' + PostID.ToString
         )
       );
       dsPosts.Dataset.Refresh;
