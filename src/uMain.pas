@@ -76,6 +76,10 @@ var
 
 implementation
 
+uses
+    RO.TIf
+  ;
+
 {$R *.dfm}
 
 procedure TfMain.bConnectClick(Sender: TObject);
@@ -250,16 +254,20 @@ end;
 
 function TfMain.TOrderField.AsString: string;
 begin
-  Result := FFieldName;
-  if FDesc
-    then Result := Result + ' DESC';
+  Result := TIf<string>.New(
+    FDesc,
+    FFieldName + ' DESC',
+    FFieldName
+  ).Eval;
 end;
 
 procedure TfMain.TOrderField.SetFieldName(Value: string);
 begin
-  if Value = FFieldName
-    then FDesc := not FDesc
-    else FDesc := False;
+  FDesc := TIf<Boolean>.New(
+    Value = FFieldName,
+    not FDesc,
+    False
+  ).Eval;
   FFieldName := Value;
 end;
 
