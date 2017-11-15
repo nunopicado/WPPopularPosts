@@ -143,7 +143,9 @@ begin
     '1. Insert your server access data'#10 +
     '2. Click ''Connect'''#10 +
     '3. Double Click the post you need to change'#10 +
-    '4. Insert new value';
+    '4. Insert new value'#10 +
+    #10 +
+    'Clicking in the column title sorts the column';
   ConnectionInfo := TConnectionInfo.New(
     ChangeFileExt(
       ParamStr(0),
