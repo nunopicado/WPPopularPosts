@@ -5,7 +5,8 @@ uses
   uMain in 'uMain.pas' {fMain},
   ConnectionInfo in 'ConnectionInfo.pas',
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  ConnectionInfoIntf in 'ConnectionInfoIntf.pas';
 
 {$R *.res}
 
