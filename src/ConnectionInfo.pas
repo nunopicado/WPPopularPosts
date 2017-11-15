@@ -18,6 +18,7 @@ type
     cPort          = 'Port';
     cUsername      = 'Username';
     cPassword      = 'Password';
+    cPortDefault   = 3306;
     // DB Info
     cDatabase      = 'Database';
     cTablePreffix  = 'TablePreffix';
@@ -101,7 +102,7 @@ begin
   Result := FIni.ReadInteger(
     cSectionServer,
     cPort,
-    3306
+    cPortDefault
   );
 end;
 
