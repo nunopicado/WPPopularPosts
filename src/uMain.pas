@@ -17,6 +17,7 @@ uses
   , RO.DBConnectionIntf
   , RO.DBGenericImpl
   , RO.DBUniImpl
+  , ConnectionInfoIntf
   , ConnectionInfo
   ;
 
