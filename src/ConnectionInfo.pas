@@ -90,8 +90,7 @@ begin
       cPassword,
       ''
     )
-  )
-    .Decrypt;
+  ).Decrypt;
 end;
 
 function TConnectionInfo.GetPort: word;
