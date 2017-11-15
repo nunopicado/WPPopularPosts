@@ -67,7 +67,7 @@ type
     ConnectionInfo: IConnectionInfo;
     procedure LoadConnectionInfo;
     procedure SaveConnectionInfo;
-    procedure LoadPosts;
+    procedure LoadPosts(const FieldName: string);
     procedure ChangePageViews(const PostID: Integer; const NewValue: LongWord);
   end;
 
@@ -104,8 +104,7 @@ begin
   if dbSQL.IsConnected
     then begin
       SaveConnectionInfo;
-      OrderField.FieldName := 'post_title';
-      LoadPosts;
+      LoadPosts('post_title');
       gridPosts.SetFocus;
     end
     else begin
@@ -205,8 +204,7 @@ end;
 
 procedure TfMain.gridPostsTitleClick(Column: TColumn);
 begin
-  OrderField.FieldName := Column.FieldName;
-  LoadPosts;
+  LoadPosts(Column.FieldName);
 end;
 
 procedure TfMain.LoadConnectionInfo;
@@ -219,8 +217,9 @@ begin
   edPassword.Text     := ConnectionInfo.Password;
 end;
 
-procedure TfMain.LoadPosts;
+procedure TfMain.LoadPosts(const FieldName: string);
 begin
+  OrderField.FieldName := FieldName;
   qPosts := dbSQL.NewQuery(
     TSQLStatement.New(
       'select ' + edTablePreffix.Text + 'posts.ID, ' + edTablePreffix.Text + 'posts.post_title, ' + edTablePreffix.Text + 'popularpostsdata.pageviews '+
