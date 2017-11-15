@@ -10,13 +10,16 @@ uses
 type
   TConnectionInfo = class(TInterfacedObject, IConnectionInfo)
   private const
+    // INI sections
     cSectionServer = 'Connection';
     cSectionDB     = 'Database';
+    // Server Info
     cHostname      = 'Hostname';
     cPort          = 'Port';
-    cDatabase      = 'Database';
     cUsername      = 'Username';
     cPassword      = 'Password';
+    // DB Info
+    cDatabase      = 'Database';
     cTablePreffix  = 'TablePreffix';
   private var
     FIni: TIniFile;
